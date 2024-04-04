@@ -9,16 +9,24 @@ def get_html_content(request):
     session.headers['User-Agent'] = USER_AGENT
     session.headers['Accept-Language'] = LANGUAGE
     session.headers['Content-Language'] = LANGUAGE
-    html_content = session.get(f'https://www.allrecipes.com/recipe/{recipe}').text
+    html_content = session.get(f'https://www.allrecipes.com/{recipe}').text
     return html_content
+
+
+    # url ="https://www.allrecipes.com/"
+    # r = request.get(url)
+    # from bs4 import BeautifulSoup
+    # soup = BeautifulSoup(r.text, 'html.parser')
+    # print(soup)
+
 
 def home(request):
     result = None
     if 'recipe' in request.GET:
         html_content = get_html_content(request)
-        print(html_content)
         from bs4 import BeautifulSoup
         soup = BeautifulSoup(html_content, 'html.parser')
-        result = dict()
-      
+        print(html_content)
+
+
     return render(request, 'index.html', {'result': result})
